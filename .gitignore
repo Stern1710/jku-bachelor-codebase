@@ -35,3 +35,6 @@ obj/
 
 # Ignore Apple ds store
 .ds_store
+
+#ignore vs code 
+.vscode

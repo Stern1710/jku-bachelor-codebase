@@ -1,0 +1,161 @@
+import java.util.*;
+
+COMPILER Phonebook
+
+public class Phonebook {
+	private final List<Entry> entries = new ArrayList<>();
+
+	public boolean addEntry (Entry entry) {
+		for (Entry e : entries) {
+			if (e.getName().equals(entry.getName())) {
+				return false; 
+			}
+		}
+		entries.add(entry);
+		return true;
+	}
+
+	int countPhoneNumbers() {
+		return entries.stream().mapToInt(e -> e.getNumberSize()).sum();
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("Phonebook with ").append(countPhoneNumbers()).append(" phone numbers\n\n");
+
+		for (Entry e : entries) {
+			sb.append(e.toString());
+		}
+
+		return sb.toString();
+	}
+}
+
+public class Entry {
+	private String name;
+	private final List<PhoneNumber> numbers = new ArrayList<>();
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void addNumber (PhoneNumber number) {
+		numbers.add(number);
+	}
+
+	public int getNumberSize() {
+		return numbers.size();
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(name).append(":\n");
+
+		for (PhoneNumber number : numbers) {
+			sb.append("  ").append(number.toString()).append("\n");
+		}
+
+		return sb.toString();
+	}
+}
+
+public class PhoneNumber {
+	private String number;
+	private String infoText;
+	
+	public PhoneNumber(String number) {
+		this.number = number;
+		this.infoText = null;
+	}
+
+	public void setInfoText(String infoText) {
+		this.infoText = infoText;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(number);
+
+		if (infoText != null) {
+			sb.append(" ");
+			sb.append(infoText);
+		}
+
+		return sb.toString();
+	}
+}
+
+
+CHARACTERS
+	digit	= '0' .. '9' .
+	letter	= 'a' .. 'z' + 'A' .. 'Z' .
+	
+TOKENS
+	text 		= letter { letter } .
+	country_id	= "+" digit [ digit [ digit [ digit ]]] .
+	location	= "-" digit [ digit [ digit [ digit [ digit ]]]].
+	number		= "/" digit { digit } .
+	
+COMMENTS FROM "##" TO "**" NESTED
+COMMENTS FROM "%" TO "\n"
+
+IGNORE '\r' + '\n' + '\t'
+
+PRODUCTIONS
+	Phonebook	=
+		Entry<out Entry entry> 	(. Phonebook phoneBook = new Phonebook();
+								phoneBook.addEntry(entry); .)
+		{ 
+			Entry <out entry>	(. 	if (!phoneBook.addEntry(entry)) { 
+										SemErr("Phonebook entries must have unique names");  
+									}
+								.)
+		}						(. System.out.println(phoneBook.toString()); .)
+		.
+
+	Entry<out Entry entry>		=  			(. entry = new Entry(); .)
+		Words<out String word> 				(. entry.setName(word); .)
+		":" 
+		PhoneNumber<out PhoneNumber number>	(. entry.addNumber(number); .)
+		{
+			"," 
+			PhoneNumber <out number> 		(. entry.addNumber(number); .)
+		} 
+		"."
+		.
+
+	Words<out String word>		= 	(. StringBuilder sb = new StringBuilder(); .)
+		text 						(. sb.append(t.val); .)
+		{
+			text 					(. sb.append(" ").append(t.val); .)
+		}							(. word = sb.toString(); .)
+		. 
+
+	PhoneNumber<out PhoneNumber pn>	=	(. StringBuilder sb = new StringBuilder(); .)
+		(
+			"0"			
+			|
+			country_id
+		) 							(. sb.append(t.val); .)
+		location 					(. sb.append(t.val); .)
+		number 						(. sb.append(t.val);
+									   pn = new PhoneNumber(sb.toString());
+									.)
+		[							(. sb = new StringBuilder(); .)
+			"(" 					(. sb.append(t.val); .)
+			Words<out String word> 	(. sb.append(word); .)
+			")"						(. sb.append(t.val); 
+									   pn.setInfoText(sb.toString());
+									.)
+		] 							
+		.
+
+END Phonebook.
