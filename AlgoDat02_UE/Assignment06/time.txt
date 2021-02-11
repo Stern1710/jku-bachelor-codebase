@@ -1,0 +1,6 @@
+#Student ID
+k11812499
+#Assignment number
+06
+#Time in minutes
+500
