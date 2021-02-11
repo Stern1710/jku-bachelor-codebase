@@ -1,0 +1,117 @@
+Displaying output for following situations
+------------------------------------------
+1) Add appointment before any other with valid short enough duration - Expected to work
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): a
+   Bitte Beschreibung eingeben: Das ist der Termin vor allen anderen
+   Bitte Datum eingeben (tt.mm.jjjj): 01.01.2019
+   Bitte Zeit eingeben (HH mm): 00 01
+   Bitte Dauer in Minuten eingeben: 60
+Einfügen erfolgreich
+ID: 4; Date: 2019-01-01; Time: 00:01; Duration: 60; Description: Das ist der Termin vor allen anderen
+
+2) Add appointment between two appointments with valid duration - Expected to work
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): a
+   Bitte Beschreibung eingeben: 07.03.2019
+   Bitte Datum eingeben (tt.mm.jjjj): 07.03.2019
+   Bitte Zeit eingeben (HH mm): 12 00
+   Bitte Dauer in Minuten eingeben: 30
+Einfügen erfolgreich
+ID: 5; Date: 2019-03-07; Time: 12:00; Duration: 30; Description: 07.03.2019
+
+3) Add appointment that collides to next appointment due to the length- Expected to fail
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): a
+   Bitte Beschreibung eingeben: Dieser Test wird fehlschlagen
+   Bitte Datum eingeben (tt.mm.jjjj): 07.03.2019
+   Bitte Zeit eingeben (HH mm): 13 00
+   Bitte Dauer in Minuten eingeben: 90
+Einfügen nicht erfolgreich
+(Was too close to the 14:00 appointment)
+
+4) Add appointment too close to the previous appointment - Expected to fail
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): a
+   Bitte Beschreibung eingeben: DIeser Test wird auch fehlschlagen
+   Bitte Datum eingeben (tt.mm.jjjj): 08.03.2019
+   Bitte Zeit eingeben (HH mm): 09 30
+   Bitte Dauer in Minuten eingeben: 30
+Einfügen nicht erfolgreich
+(Too close to 08:30 90min appointment)
+
+5) Trying to access appointment at point in time that is before the last appointment - Expected to work
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): z
+   Bitte Datum eingeben (tt.mm.jjjj): 03.03.2019
+   Bitte Zeit eingeben (HH mm): 00 00
+ID: 0; Date: 2019-03-07; Time: 08:30; Duration: 90; Description: SW2 VO
+
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): z
+   Bitte Datum eingeben (tt.mm.jjjj): 07.03.2019
+   Bitte Zeit eingeben (HH mm): 11 00
+ID: 5; Date: 2019-03-07; Time: 12:00; Duration: 30; Description: 07.03.2019
+
+6) Trying to access appointment with date after last appointment in calendar  - Expected to fail
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): z
+   Bitte Datum eingeben (tt.mm.jjjj): 01.01.2020
+   Bitte Zeit eingeben (HH mm): 00 00
+NICHT VORHANDEN
+
+7) Trying to access first appointment of the day (day where appointments exist) - Expected to work
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): e
+   Bitte Datum eingeben (tt.mm.jjjj): 07.03.2019
+ID: 0; Date: 2019-03-07; Time: 08:30; Duration: 90; Description: SW2 VO
+
+8) Trying to access first appointment of the day (day where no appointments exist) - Expected to fail
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): e
+   Bitte Datum eingeben (tt.mm.jjjj): 02.03.2019
+NICHT VORHANDEN
+
+9) Accessing next appointment when there are some existing - Expected to work
+(after accessing first appointment of 07.03.2019)
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): n
+ID: 1; Date: 2019-03-07; Time: 10:15; Duration: 90; Description: SW2 UE
+
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): n
+ID: 5; Date: 2019-03-07; Time: 12:00; Duration: 30; Description: 07.03.2019
+
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): n
+ID: 2; Date: 2019-03-07; Time: 14:00; Duration: 90; Description: Algo1 
+
+10) Accessing next appointment when there none - Expected to fail
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): n
+ID: 3; Date: 2019-03-08; Time: 08:30; Duration: 90; Description: Electronic
+
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): n
+NICHT VORHANDEN
+(No more appointsments after the 08:30 on 08.03.2019)
+
+11) Deleting an appointment over a valid id - Expected to work
+
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): l
+   Bitte Id eingeben: 5
+Löschen erfolgreich
+
+12) Deleting an appointment with a non-valid id - Expected to fail
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): l
+   Bitte Id eingeben: 10
+Löschen nicht erfolgreich
+
+13) Show all appointments - Expected to work and show all appointment (multible examples will be displayed right after)
+(After creating appointment)
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): p
+ID: 4; Date: 2019-01-01; Time: 00:01; Duration: 60; Description: Das ist der Termin vor allen anderen
+ID: 0; Date: 2019-03-07; Time: 08:30; Duration: 90; Description: SW2 VO
+ID: 1; Date: 2019-03-07; Time: 10:15; Duration: 90; Description: SW2 UE
+ID: 5; Date: 2019-03-07; Time: 12:00; Duration: 30; Description: 07.03.2019
+ID: 2; Date: 2019-03-07; Time: 14:00; Duration: 90; Description: Algo1 
+ID: 3; Date: 2019-03-08; Time: 08:30; Duration: 90; Description: Electronic
+
+(After deleting with id=5)
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): p
+ID: 4; Date: 2019-01-01; Time: 00:01; Duration: 60; Description: Das ist der Termin vor allen anderen
+ID: 0; Date: 2019-03-07; Time: 08:30; Duration: 90; Description: SW2 VO
+ID: 1; Date: 2019-03-07; Time: 10:15; Duration: 90; Description: SW2 UE
+ID: 2; Date: 2019-03-07; Time: 14:00; Duration: 90; Description: Algo1 
+ID: 3; Date: 2019-03-08; Time: 08:30; Duration: 90; Description: Electronic
+
+14) Exit the programm - Expected to work and to close the application
+Bitte Operation auswaehlen: (a, z, e, n, l, p, x): x
+
+Ciao! Auf ein Wiedersehen freut sich Dein Terminkalender!
