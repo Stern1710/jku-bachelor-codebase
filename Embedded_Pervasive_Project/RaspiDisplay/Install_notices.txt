@@ -1,0 +1,30 @@
+1) Get your Raspi with Raspian
+    * Update
+        * sudo apt update
+        * sudo apt ugprade
+
+2) Install needed components for MQTT and hardware-ports
+    * sudo apt install python-gpiozero -y
+    * This install a MQTT server service on the raspi that runs in the background
+        * sudo apt install -y mosquitto
+    * For MQTT - Enables you to rund the provided scripts
+        * sudo apt install python-pip
+        * sudo pip install paho-mqtt
+        * sudo pip install mysql-connector-python
+    
+3) Install whatever webservers you need
+    * Webserver
+        * sudo apt install apache2 -y
+    * Database
+        * sudo apt install mariadb-server -y
+        * sudo mysql_secure_installation
+            * Choose a strong password, but REMEBER it please!
+            * Answer all questions asked with yes (y-key) as this makes the installation more secure
+        * sudo mysql -u root -p < createDatabase.sql
+            * Make sure the createDatabase.sql file exists in the directory!
+    * PHP packages
+        * sudo apt install php libapache2-mod-php php-mysql -y
+
+4) Install crontab for dataHandler
+    * sudo crontab -e
+    * @reboot /usr/bin/python <Absolute/Path/To/dataHandler.py>

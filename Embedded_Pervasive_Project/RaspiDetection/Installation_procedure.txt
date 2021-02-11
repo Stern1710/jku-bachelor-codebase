@@ -1,0 +1,44 @@
+# Important: Currently install.sh is UNDER CONSTRUCTION! -> Yet maybe Step 3+4 are now obsolete by the script
+# Refere to this manual here for safe installation!
+# Also install.sh can only deal with software-sided setup -> All HW-Work must be done by hand
+
+1) Get a raspberry pi + SenseHat + assemble
+    * This guide references the raspian lite image
+
+2) Wire stuff up
+    * Water Detection Sensor + attached ADC
+        * ADC Ground to any ground (example PIN 39)
+        * VDD (+5V) to Pin 37 (GPIO26)
+        * Data-Line (Example DO) to Pin 35 (GPIO19)
+
+NOTE: Step 3+4 should be automated by install.sh now
+
+3) Get raspian, install + do all updates
+    * Expand file system
+        * Note: This is hardly ever needed today as raspian / noobs is doing this automatically
+        * sudo raspi-config -->  Advanced --> Expand file system
+        * Can also be done by: sudo raspi-config --expand-rootfs
+    * reboot raspberry with sudo poweroff --reboot
+    * sudo apt update
+    * sudo apt ugprade
+
+4) Install sense-hat & other important packages
+    * sudo apt install sense-hat -y
+    * sudo apt install python-gpiozero -y
+    * sudo apt install python-pip
+    * sudo pip install paho-mqtt
+
+5) Get all needed script files in same folder
+    * We recommend in this case ~/ as we reference this folder in the following
+        * getSensorData.py
+        * Modify the MQTT server IP-adress! (using nano getSensorData.py --> MQTT_SERVER)
+
+6) Run script for testing
+    * Note: There must be a receiver (called subscriber) listening to "water" and "temp" channel
+    * python getSensorData.py
+    * Check on MQTT reciever if the data has arrived
+
+7) Setup cron job for getSensorData.py
+    * sudo crontab -e
+    * Insert at bottom of file (without "")
+      */10 * * * * /usr/bin/python /home/pi/getSensorData.py

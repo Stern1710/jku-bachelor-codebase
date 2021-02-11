@@ -5,6 +5,7 @@ This repository contains all the code written during the bachelor program for Co
 - AlgoDat02_UE
 - Artificial_Intelligence_UE
 - CSharp_Project
+- Embedded_Pervasive_Project
 - Multimediasysteme_Project
 - Multimediasysteme_UE
 - Softwareentwicklung2_UE

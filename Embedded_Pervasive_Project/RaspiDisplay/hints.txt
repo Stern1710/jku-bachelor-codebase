@@ -1,0 +1,37 @@
+General
+    * Please write down all commands you needed to perform in order to get the thing running
+    * Also provide all files for this
+    * Receive data over MQTT
+    * Store data in some form (maybe Database, maybe CSV, etc)
+	* Light LED depending on water status
+    * Display data on webinterface
+    
+Python
+    * Read data over MQTT (see MQTT)
+    * Store data to database
+        * see https://pynative.com/python-mysql-database-connection/
+        * see https://stackoverflow.com/questions/372885/how-do-i-connect-to-a-mysql-database-in-python
+
+MQTT
+    * see: https://tutorials-raspberrypi.de/datenaustausch-raspberry-pi-mqtt-broker-client/
+    * Importance:
+        * The DisplayRaspberry has the server running on it (so install mosquitto)
+        * subscribe to service running on the raspberrypi
+            * water for true/false if it is watered
+            * temp for current temperature
+        * sudo pip install paho-mqtt
+            * Maybe look this part up for python integration
+
+Webservice
+    * Suggestion: Use Apache2 + PHP
+    * Database: MariaDB / MySQL
+    * PHP 7 (and newer subversions)
+
+Datastora
+    * Suggestion: Very simple MariaDB / MySQL database
+    * 1 Table with 4 columns
+        * ID
+        * Water value (Bit)
+        * Temp value (Int)
+        * Timestamp of insertion into database (Timestamp)
+    * MySQL/MariaDB is fairly easy to access from PHP and Python
