@@ -8,6 +8,7 @@ This repository contains all the code written during the bachelor program for Co
 - Embedded_Pervasive_Project
 - Multimediasysteme_Project
 - Multimediasysteme_UE
+- Software_Engineering_UE
 - Softwareentwicklung2_UE
 - Softwareentwicklung2_PR
 - Systems_Programming

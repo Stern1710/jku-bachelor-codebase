@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlSystem.ui.Controller">
+   <children>
+   	<HBox spacing="5.0" />
+   	<TableView fx:id="streetView" prefHeight="400.0" prefWidth="535.0">
+   		<columns>
+   			<TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
+   			<TableColumn fx:id="nameColumn" prefWidth="105.33330535888672" text="Name" />
+   			<TableColumn fx:id="modeColumn" prefWidth="83.3333740234375" text="Mode" />
+            <TableColumn fx:id="lightsColumn" prefWidth="72.66668701171875" text="Lights" />
+            <TableColumn fx:id="warnsignColumn" prefWidth="115.33331298828125" text="Warnsign" />
+            <TableColumn fx:id="roadColumn" prefWidth="75.0" text="Roadtype" />
+            
+   		</columns>
+   	</TableView>
+      <HBox>
+         <children>
+            <Button fx:id="addBtn" mnemonicParsing="false" text="Add Street" />
+            <Button fx:id="removeBtn" mnemonicParsing="false" text="Remove Street" />
+         </children>
+      </HBox>
+   </children>
+
+
+</VBox>
