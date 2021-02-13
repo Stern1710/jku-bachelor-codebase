@@ -1,6 +1,0 @@
-
-Got no data until now
-ControlDevice got on Street1: motor:0 unmotor:0 total:0 participants at today at: 02:26:43
-ControlDevice got on Street1: motor:52 unmotor:35 total:87 participants at today at: 02:26:50
-ControlDevice got on Street1: motor:59 unmotor:28 total:87 participants at today at: 02:26:57
-ControlDevice got on Street1: motor:16 unmotor:19 total:35 participants at today at: 02:27:04
